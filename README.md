@@ -27,7 +27,7 @@ This boilerplate project gives you a ready-made front-end for your Shopify store
 
 ### React
 
-React has quickly established itself as a new standard for web and mobile development and its component-based approach is a perfect fit for complex ecommerce sites.
+[React](https://facebook.github.io/react/) has quickly established itself as a new standard for web and mobile development and its component-based approach is a perfect fit for complex ecommerce sites.
 
 ### GraphQL
 
@@ -35,7 +35,16 @@ React has quickly established itself as a new standard for web and mobile develo
 
 ### Apollo
 
-[Apollo Client](https://github.com/apollographql/apollo-client)
+[Apollo Client](https://github.com/apollographql/apollo-client) is the GraphQL client used by this boilerplate. It will query your GraphQL endpoint, and then insert the results in the Redux store. 
 
 ### Redux
 
+[Redux](http://redux.js.org/) helps manage your app's global state. It's used transparently by Apollo, but can also be used manually to keep track of things like UI state (cart shown/hidden, etc.).
+
+### Next.js
+
+[Next.js](https://github.com/zeit/next.js) is used as a build tool and server, and takes care of server-side rendering. Alternatively, it can also export your site as a [static app](https://github.com/zeit/next.js#static-html-export), letting you host your front-end on static hosts like GitHub pages. 
+
+### Storybook
+
+[Storybook](http://storybook.js.org) is a component explorer for React. It lets you view all your components separately from your main app, which makes it much easier to keep track of them and test out their different states. 
