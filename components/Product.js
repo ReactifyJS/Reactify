@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import VariantSelector from './VariantSelector';
 import withCheckoutAdd from '../mutations/withCheckoutAdd'
 
-class Product extends Component {
+export class Product extends Component {
   constructor(props) {
     super(props);
 
@@ -82,6 +82,5 @@ class Product extends Component {
     );
   }
 }
-
 
 export default withCheckoutAdd(Product);
