@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import Cart from './Cart'
 
+import ToggleCart from './ToggleCart'
+
 const Layout = ({ children, shop, loading }) => 
   <div className="App">
     <header className="App__header">
@@ -10,6 +12,7 @@ const Layout = ({ children, shop, loading }) =>
         <h1>{shop && shop.name}: React Example</h1>
         <h2>{shop && shop.description}</h2>
       </div>
+      <ToggleCart />
     </header>
     <div className="Wrapper">
       {children}

@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
 import LineItem from './LineItem';
-import withCheckoutId from '../containers/queries/withCheckoutId'
+import withCheckoutId from '../containers/redux/withCheckoutId'
+import withIsCartOpen from '../containers/redux/withIsCartOpen'
+
 import withCheckout from '../containers/queries/withCheckout'
 import { setCheckoutId } from '../lib/actions'
 import { compose } from 'react-apollo'
 import branch from 'recompose/branch'
+import { openCart, closeCart } from '../lib/actions'
 
 class Cart extends Component {
   
   constructor(props) {
     super(props);
-    this.openCheckout = this.openCheckout.bind(this);
+    this.openCheckout = this.openCheckout.bind(this)
+    this.handleCartClose = this.handleCartClose.bind(this)
   }
 
   openCheckout() {
     window.open(this.props.checkout.webUrl);
   }
+
+  handleCartClose() {
+    this.props.dispatch(closeCart())
+  }
+
 
   render() {
 
@@ -39,7 +48,7 @@ class Cart extends Component {
         <header className="Cart__header">
           <h2>Cart</h2>
           <button
-            onClick={this.props.handleCartClose}
+            onClick={this.handleCartClose}
             className="Cart__close">
             ×
           </button>
@@ -78,6 +87,10 @@ Cart.defaultProps = {
 }
 
 export default compose(
+  withIsCartOpen,
   withCheckoutId,
-  withCheckout
+  branch( // only wrap with withCheckout if checkoutId is available
+    props => !!props.checkoutId,
+    withCheckout
+  )
 )(Cart)

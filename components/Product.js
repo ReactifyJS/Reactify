@@ -3,6 +3,8 @@ import VariantSelector from './VariantSelector';
 // import withCheckoutAdd from '../containers/mutations/withCheckoutAdd'
 import { withCheckoutLineItemsAdd } from '../containers/mutations/checkoutMutations'
 import { connect } from 'react-redux';
+import withIsCartOpen from '../containers/redux/withIsCartOpen'
+import { openCart } from '../lib/actions'
 
 export class Product extends Component {
   constructor(props) {
@@ -73,6 +75,8 @@ export class Product extends Component {
       }
     })
 
+    this.props.dispatch(openCart())
+
   }
 
   render() {
@@ -104,4 +108,4 @@ export class Product extends Component {
   }
 }
 
-export default withCheckoutLineItemsAdd(Product);
+export default withIsCartOpen(withCheckoutLineItemsAdd(Product));

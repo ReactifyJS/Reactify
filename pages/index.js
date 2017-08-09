@@ -7,6 +7,6 @@ import withData from '../lib/withData'
 
 export default withData((props) => (
   <App>
-    {/*<ProductList />*/}
+    <ProductList />
   </App>
 ))

@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import { gql, graphql, compose } from 'react-apollo'
 import Layout from './Layout'
 import withShop from '../containers/queries/withShop'
-import withCheckoutId from '../containers/queries/withCheckoutId'
+import withCheckoutId from '../containers/redux/withCheckoutId'
 import withCheckoutCreate from '../containers/mutations/withCheckoutCreate'
 import branch from 'recompose/branch'
 import { setCheckoutId } from '../lib/actions'
@@ -33,7 +33,7 @@ class App extends Component {
       }
     }).then((res) => {
       console.log('// checkoutCreate mutation completed')
-      console.log(res.data.checkoutCreate)
+      // console.log(res.data.checkoutCreate)
       // store checkout ID in Redux (useful to retrieve checkout contents)
       const checkoutId = res.data.checkoutCreate.checkout.id
       this.props.dispatch(setCheckoutId(checkoutId))
@@ -41,8 +41,6 @@ class App extends Component {
   }
 
   render() {
-
-    console.log(this.props)
 
     const { loading, shop, children } = this.props
 
@@ -396,10 +394,18 @@ class App extends Component {
 
           /* PRODUCTS
            * ============================== */
+
+           .product-list{
+            max-width: 900px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+           }
+
           .Product {
             flex: 0 1 31%;
-            margin-left: 1%;
-            margin-right: 1%;
+            margin-left: 2%;
+            margin-right: 2%;
             margin-bottom: 3%;
           }
 
