@@ -1,4 +1,5 @@
-# Reactify
+![https://d3vv6lp55qjaqc.cloudfront.net/items/153G2k1T1U443t1D1z2L/reactify-logo-2.png?X-CloudApp-Visitor-Id=d40749865873d7b5ab32c80852150f74&v=8b3ec22a](https://d3vv6lp55qjaqc.cloudfront.net/items/153G2k1T1U443t1D1z2L/reactify-logo-2.png?X-CloudApp-Visitor-Id=d40749865873d7b5ab32c80852150f74&v=8b3ec22a)
+
 A React/GraphQL/Next.js boilerplate for Shopify
 
 ## Getting Started
