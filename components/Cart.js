@@ -1,28 +1,16 @@
 import React, {Component} from 'react';
 import LineItem from './LineItem';
-import withCheckout from '../containers/withCheckout.js';
+import withCheckoutId from '../containers/queries/withCheckoutId'
+import withCheckout from '../containers/queries/withCheckout'
+import { setCheckoutId } from '../lib/actions'
+import { compose } from 'react-apollo'
+import branch from 'recompose/branch'
 
 class Cart extends Component {
+  
   constructor(props) {
-  super(props);
-
+    super(props);
     this.openCheckout = this.openCheckout.bind(this);
-    this.state = {
-      checkout: { lineItems: { edges: [] } }
-    }
-  }
-
-  componentWillMount() {
-    this.props.createCheckout(
-      { variables: { input: {
-        allowPartialAddresses: true,
-        shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}
-        }}
-      }).then((res) => {
-      this.setState({
-        checkout: res.data.checkoutCreate.checkout
-      });
-    });
   }
 
   openCheckout() {
@@ -30,7 +18,12 @@ class Cart extends Component {
   }
 
   render() {
-    let line_items = this.state.checkout.lineItems.edges.map((line_item) => {
+
+    if (!this.props.checkout) {
+      return <p>Loading…</p>
+    }
+
+    let line_items = this.props.checkout.lineItems.edges.map((line_item) => {
       return (
         <LineItem
           removeLineItemInCart={this.props.removeLineItemInCart}
@@ -58,19 +51,19 @@ class Cart extends Component {
           <div className="Cart-info clearfix">
             <div className="Cart-info__total Cart-info__small">Subtotal</div>
             <div className="Cart-info__pricing">
-              <span className="pricing">$ {this.state.checkout.subtotalPrice}</span>
+              <span className="pricing">$ {this.props.checkout.subtotalPrice}</span>
             </div>
           </div>
           <div className="Cart-info clearfix">
             <div className="Cart-info__total Cart-info__small">Taxes</div>
             <div className="Cart-info__pricing">
-              <span className="pricing">$ {this.state.checkout.totalTax}</span>
+              <span className="pricing">$ {this.props.checkout.totalTax}</span>
             </div>
           </div>
           <div className="Cart-info clearfix">
             <div className="Cart-info__total Cart-info__small">Total</div>
             <div className="Cart-info__pricing">
-              <span className="pricing">$ {this.state.checkout.totalPrice}</span>
+              <span className="pricing">$ {this.props.checkout.totalPrice}</span>
             </div>
           </div>
           <button className="Cart__checkout button" onClick={this.openCheckout}>Checkout</button>
@@ -80,4 +73,11 @@ class Cart extends Component {
   }
 }
 
-export default withCheckout(Cart);
+Cart.defaultProps = {
+  isCartOpen: true
+}
+
+export default compose(
+  withCheckoutId,
+  withCheckout
+)(Cart)

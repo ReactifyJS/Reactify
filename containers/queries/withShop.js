@@ -1,3 +1,8 @@
+/*
+
+Get main shop info
+
+*/
 import { gql, graphql } from 'react-apollo'
 
 const shopInfo = gql`

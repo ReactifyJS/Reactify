@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import VariantSelector from './VariantSelector';
-import withCheckoutAdd from '../mutations/withCheckoutAdd'
+// import withCheckoutAdd from '../containers/mutations/withCheckoutAdd'
+import { withCheckoutLineItemsAdd } from '../containers/mutations/checkoutMutations'
+import { connect } from 'react-redux';
 
 export class Product extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ export class Product extends Component {
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
     this.findImage = this.findImage.bind(this);
+    this.addVariantToCart = this.addVariantToCart.bind(this);
   }
 
   componentWillMount() {
@@ -54,6 +57,24 @@ export class Product extends Component {
     });
   }
 
+  addVariantToCart(event) {
+    event.preventDefault()
+
+    const variant = this.state.selectedVariant || this.props.product.variants.edges[0].node
+    const variantId = variant.id
+    const quantity = this.state.selectedVariantQuantity || 1
+
+    this.props.checkoutLineItemsAdd({
+      variables: {
+        checkoutId: this.props.checkoutId, 
+        lineItems:  [
+          {variantId, quantity: parseInt(quantity, 10)}
+        ] 
+      }
+    })
+
+  }
+
   render() {
     let variantImage = this.state.selectedVariantImage || this.props.product.images.edges[0].node.src
     let variant = this.state.selectedVariant || this.props.product.variants.edges[0].node
@@ -77,10 +98,10 @@ export class Product extends Component {
           Quantity
           <input min="1" type="number" defaultValue={variantQuantity} onChange={this.handleQuantityChange}></input>
         </label>
-        <button className="Product__buy button" onClick={() => this.props.addVariantToCart(variant.id, variantQuantity)}>Add to Cart</button>
+        <button className="Product__buy button" onClick={this.addVariantToCart}>Add to Cart</button>
       </div>
     );
   }
 }
 
-export default withCheckoutAdd(Product);
+export default withCheckoutLineItemsAdd(Product);
